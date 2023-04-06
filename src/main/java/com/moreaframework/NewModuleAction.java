@@ -1,11 +1,11 @@
-package com.MoreaFramework;
+package com.moreaframework;
 
 import com.intellij.openapi.actionSystem.*;
 import com.intellij.openapi.application.WriteAction;
 import com.intellij.openapi.ui.InputValidator;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.MoreaFramework.settings.AppSettingsState;
+import com.moreaframework.settings.AppSettingsState;
 
 import java.io.IOException;
 import java.io.OutputStream;
