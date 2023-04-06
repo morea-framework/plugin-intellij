@@ -11,6 +11,8 @@ import javax.swing.*;
 public class AppSettingsComponent {
 
     private final JPanel myMainPanel;
+
+    private final JLabel header = new JLabel("[New Module Button Settings]: Controls files automatically created when making a new Module");
     private final JBCheckBox myOutcomeStatus = new JBCheckBox("Outcomes");
     private final JBCheckBox myReadingStatus = new JBCheckBox("Readings");
     private final JBCheckBox myExperienceStatus = new JBCheckBox("Experiences");
@@ -18,6 +20,7 @@ public class AppSettingsComponent {
 
     public AppSettingsComponent() {
         myMainPanel = FormBuilder.createFormBuilder()
+                .addComponent(header, 1)
                 .addComponent(myOutcomeStatus, 1)
                 .addComponent(myReadingStatus, 1)
                 .addComponent(myExperienceStatus, 1)
