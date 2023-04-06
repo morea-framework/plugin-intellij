@@ -1,0 +1,84 @@
+<!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
+<idea-plugin>
+    <id>com.github.bkimcode.newpageaction</id>
+    <name>Morea</name>
+    <version>0.0.2</version>
+    <vendor email="bekim3@hawaii.edu" url="https://github.com/Spring2023MoreaFrameworkPlugin/NewPageAction">bkimcode</vendor>
+    <description><![CDATA[
+    Plugin to provide Morea developers with additional tools to aid in development.
+     - right-click option on Morea directory to create a new module
+     - right-click option on Morea module directory to create a new morea page
+  ]]></description>
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.java-capable</depends>
+    <extensions defaultExtensionNs="com.intellij">
+        <applicationService serviceImplementation="com.newpageaction.settings.AppSettingsState"/>
+        <projectService serviceImplementation="com.github.bkimcode.newpageaction.services.MyProjectService"/>
+        <applicationConfigurable
+          parentId="tools"
+          instance="com.newpageaction.settings.AppSettingsConfigurable"
+          id="com.newpageaction.settings.AppSettingsConfigurable"
+          displayName="MOREA settings"
+        />
+    </extensions>
+ <actions>
+            <action
+                    id="NewModuleAction"
+                    class="com.newpageaction.NewModuleAction"
+                    text="Create New Morea Module"
+                    description="Create a new Morea Module with a specified name"
+                    icon="AllIcons.Actions.GeneratedFolder">
+                <add-to-group group-id="NewGroup" anchor="first" />
+            </action>
+   <!--
+            <action
+                    id="NewPageAction"
+                    class="com.newpageaction.NewPageAction"
+                    text="Create Single New Morea Page"
+                    description="Create a new Morea Page with a specified name"
+                    icon="AllIcons.Actions.AddFile">
+                <add-to-group group-id="NewGroup" anchor="first" />
+            </action>
+   -->
+            <action
+                    id="NewOutcomesAction"
+                    class="com.newpageaction.NewOutcomesAction"
+                    text="Create Single New Outcome Page"
+                    description="Create a new Outcomes Page with a specified name"
+                    icon="AllIcons.Actions.AddFile">
+                <add-to-group group-id="NewGroup" anchor="first" />
+            </action>
+            <action
+                    id="NewReadingsAction"
+                    class="com.newpageaction.NewReadingsAction"
+                    text="Create Single New Reading Page"
+                    description="Create a new Readings Page with a specified name"
+                    icon="AllIcons.Actions.AddFile">
+                <add-to-group group-id="NewGroup" anchor="first" />
+            </action>
+            <action
+                    id="NewExeriencesAction"
+                    class="com.newpageaction.NewExperiencesAction"
+                    text="Create Single New Experience Page"
+                    description="Create a new Experiences Page with a specified name"
+                    icon="AllIcons.Actions.AddFile">
+                <add-to-group group-id="NewGroup" anchor="first" />
+            </action>
+            <action
+                    id="NewAssessmentsAction"
+                    class="com.newpageaction.NewAssessmentsAction"
+                    text="Create Single New Assessment Page"
+                    description="Create a new Assessments Page with a specified name"
+                    icon="AllIcons.Actions.AddFile">
+                <add-to-group group-id="NewGroup" anchor="first" />
+            </action>
+            <action
+                    id="UpdateModule"
+                    class="com.newpageaction.UpdateModule"
+                    text="Update Module.md file"
+                    description="Updates the module.md to contain current morea pages"
+                    icon="AllIcons.Actions.AddFile">
+                <add-to-group group-id="ProjectViewPopupMenu" anchor="last" />
+            </action>
+    </actions>
+</idea-plugin>
