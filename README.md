@@ -1,4 +1,5 @@
-# Morea
+# plugin-intellij
+A repository to hold an IntelliJ IDEA plugin to facilitate Morea site development
 
 ![Build](https://github.com/Spring2023MoreaFrameworkPlugin/NewPageAction/workflows/Build/badge.svg)
 [![Version](https://img.shields.io/jetbrains/plugin/v/21128-morea.svg)](https://plugins.jetbrains.com/plugin/21128-morea)
