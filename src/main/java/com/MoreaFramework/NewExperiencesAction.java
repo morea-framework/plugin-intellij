@@ -31,7 +31,7 @@ public class NewExperiencesAction extends AnAction {
         // Check if name to create is not null
         if (input != null) {
             // Check input name matches MOREA naming convention
-            input = morea.toMoreaName(input, "experiences");
+            input = morea.toMoreaName(input, "experience");
             VirtualFile directory = morea.checkDupes(e, input);
 
             String finalInput = input;
