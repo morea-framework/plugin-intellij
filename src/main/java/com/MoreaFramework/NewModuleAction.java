@@ -25,16 +25,22 @@ public class NewModuleAction extends AnAction {
             }
         });
 
+        if (input.startsWith("module-")) {
+            input = input.substring(7); // remove module-
+        }
+
+        MoreaUtils morea = new MoreaUtils();
+
         AppSettingsState settings = AppSettingsState.getInstance();
         boolean outcomes = settings.outcomeStatus;
         boolean assessments = settings.assessmentStatus;
         boolean experiences = settings.experienceStatus;
         boolean readings = settings.readingStatus;
 
-        String outcomeString = "\n  -"+ " " + "outcome-" + input;
-        String assessmentString = "\n  -"+ " " +"assessment-" + input;
-        String experienceString = "\n  -"+ " " +"experience-" + input;
-        String readingString = "\n  -"+ " " + "reading-" + input;
+        String outcomeString = "\n  - outcome-" + input;
+        String assessmentString = "\n  - assessment-" + input;
+        String experienceString = "\n  - experience-" + input;
+        String readingString = "\n  - reading-" + input;
 
         if(outcomes == false){
           outcomeString = "";
@@ -50,34 +56,27 @@ public class NewModuleAction extends AnAction {
             System.out.println("File Path: " + folder);
             // within the folder, insert a file
             // this is needed or else you can't perform actions on the plugin test
-          String finalOutcomeString = outcomeString;
-          String finalReadingString = readingString;
-          String finalExperienceString = experienceString;
-          String finalAssessmentString = assessmentString;
-          WriteAction.run(() -> {
+            String finalOutcomeString = outcomeString;
+            String finalReadingString = readingString;
+            String finalExperienceString = experienceString;
+            String finalAssessmentString = assessmentString;
+            String finalInput = input;
+
+            WriteAction.run(() -> {
                 try {
                     // create a directory with the specified name
-                    VirtualFile newDir;
-                    if (input.startsWith("module-")) {
-                        String dirName = input.substring(7); // remove "module-" prefix
-                        newDir = folder.createChildDirectory(this, dirName);
-                    } else {
-                        newDir = folder.createChildDirectory(this, input);
-                    }
+                    VirtualFile newDir = folder.createChildDirectory(this, finalInput);
+
                     // create a .md file called module-input.md inside the new directory
-                    VirtualFile newFile;
-                    if (input.startsWith("module-")) {
-                        newFile = newDir.createChildData(this, input + ".md");
-                    } else {
-                        newFile = newDir.createChildData(this, "module-" + input + ".md");
-                    }
+                    VirtualFile newFile = newDir.createChildData(this, "module-" + finalInput + ".md");
+
                     // Create the file so it matches
                     try (OutputStream outputStream = newFile.getOutputStream(this)) {
                         String content = "---" + "\n" +
                                 "title: \"" + "CHANGE ME" + "\"" + "\n" +
                                 "published: true" + "\n" +
                                 "morea_coming_soon: false" + "\n" +
-                                "morea_id: " + input+ "\n" +
+                                "morea_id: module-" + finalInput + "\n" +
                                 "morea_outcomes:"+ finalOutcomeString +"" + "\n" +
                                 "morea_readings:"+ finalReadingString +"" + "\n" +
                                 "morea_experiences:"+ finalExperienceString +"" +"\n" +
@@ -96,20 +95,12 @@ public class NewModuleAction extends AnAction {
                     }
 
                     if(readings == true) {
-                      //Create Reading.md Template
-                      newFile = newDir.createChildData(this, "reading" + "-" + input + ".md");
+                        String reading = "reading-" + finalInput;
+                      // Create Reading.md Template
+                      newFile = newDir.createChildData(this, reading + ".md");
                       // Create the file so it matches
                       try (OutputStream outputStream = newFile.getOutputStream(this)) {
-                        String content = "---" + "\n" +
-                                "title: \"" + "CHANGE ME" + "\"" + "\n" +
-                                "published: true" + "\n" +
-                                "morea_id: " + " " +"reading" + "-" + input+ "\n" +
-                                "morea_type: reading" + "\n" +
-                                "morea_summary: sample morea summary text " + "\n" +
-                                "morea_sort_order: " + "\n" +
-                                "morea_labels:" + "\n" +
-                                "---\n\n" +
-                                "## \"CHANGE ME\"\n\n" ;
+                        String content = morea.pageFrontMatter(reading, "reading");
                         outputStream.write(content.getBytes());
                       } catch (IOException ex) {
                         ex.printStackTrace();
@@ -117,20 +108,12 @@ public class NewModuleAction extends AnAction {
                     }
 
                     if(assessments == true) {
+                        String assessment = "assessment-" + finalInput;
                       //Create Assessment.md Template
-                      newFile = newDir.createChildData(this, "assessment" + "-" + input + ".md");
+                      newFile = newDir.createChildData(this, assessment + ".md");
                       // Create the file so it matches
                       try (OutputStream outputStream = newFile.getOutputStream(this)) {
-                          String content = "---" + "\n" +
-                                  "title: \"" + "CHANGE ME" + "\"" + "\n" +
-                                  "published: true" + "\n" +
-                                  "morea_id: " + " " +"assessment" + "-" + input+ "\n" +
-                                  "morea_type: assessment" + "\n" +
-                                  "morea_summary: CHANGE ME " + "\n" +
-                                  "morea_sort_order: " + "\n" +
-                                  "morea_labels:" + "\n" +
-                                  "---\n\n" +
-                                  "## \"CHANGE ME\"\n\n" ;
+                          String content = morea.pageFrontMatter(assessment, "assessment");
                         outputStream.write(content.getBytes());
                       } catch (IOException ex) {
                         ex.printStackTrace();
@@ -138,20 +121,12 @@ public class NewModuleAction extends AnAction {
                     }
 
                     if(outcomes == true) {
+                        String outcome = "outcome-" + finalInput;
                       //Create Outcome.md Template
-                      newFile = newDir.createChildData(this, "outcome" + "-" + input + ".md");
+                      newFile = newDir.createChildData(this, outcome + ".md");
                       // Create the file so it matches
                       try (OutputStream outputStream = newFile.getOutputStream(this)) {
-                          String content = "---" + "\n" +
-                                  "title: \"" + "CHANGE ME" + "\"" + "\n" +
-                                  "published: true" + "\n" +
-                                  "morea_id: " + " " +"outcome" + "-" + input+ "\n" +
-                                  "morea_type: outcome" + "\n" +
-                                  "morea_summary: " + "\n" +
-                                  "morea_sort_order: " + "\n" +
-                                  "morea_labels:" + "\n" +
-                                  "---\n\n" +
-                                  "## \"CHANGE ME\"\n\n" ;
+                          String content = morea.pageFrontMatter(outcome, "outcome");
                         outputStream.write(content.getBytes());
                       } catch (IOException ex) {
                         ex.printStackTrace();
@@ -159,20 +134,12 @@ public class NewModuleAction extends AnAction {
                     }
 
                     if(experiences == true) {
+                        String experience = "experience-" + finalInput;
                       //Create Experience.md Template
-                      newFile = newDir.createChildData(this, "experience" + "-" + input + ".md");
+                      newFile = newDir.createChildData(this, experience + ".md");
                       // Create the file so it matches
                       try (OutputStream outputStream = newFile.getOutputStream(this)) {
-                          String content = "---" + "\n" +
-                                  "title: \"" + "CHANGE ME" + "\"" + "\n" +
-                                  "published: true" + "\n" +
-                                  "morea_id: " + " " +"experience" + "-" + input+ "\n" +
-                                  "morea_type: experience" + "\n" +
-                                  "morea_summary: sample morea summary text " + "\n" +
-                                  "morea_sort_order: 2" + "\n" +
-                                  "morea_labels:" + "\n" +
-                                  "---\n\n" +
-                                  "## \"CHANGE ME\"\n\n" ;
+                          String content = morea.pageFrontMatter(experience, "experience");
                         outputStream.write(content.getBytes());
                       } catch (IOException ex) {
                         ex.printStackTrace();
