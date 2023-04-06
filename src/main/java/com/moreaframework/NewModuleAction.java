@@ -42,12 +42,12 @@ public class NewModuleAction extends AnAction {
         String experienceString = "\n  - experience-" + input;
         String readingString = "\n  - reading-" + input;
 
-        if(outcomes == false){
+        if(!outcomes){
           outcomeString = "";
         }
-        if(assessments == false){ assessmentString = "";}
-        if(experiences == false){ experienceString = "";}
-        if(readings == false){ readingString = "";}
+        if(!assessments){ assessmentString = "";}
+        if(!experiences){ experienceString = "";}
+        if(!readings){ readingString = "";}
 
         if (input != null) {
             // Do something with the input, for example, create a new file with the specified name
@@ -94,7 +94,7 @@ public class NewModuleAction extends AnAction {
                         ex.printStackTrace();
                     }
 
-                    if(readings == true) {
+                    if(readings) {
                         String reading = "reading-" + finalInput;
                       // Create Reading.md Template
                       newFile = newDir.createChildData(this, reading + ".md");
@@ -107,7 +107,7 @@ public class NewModuleAction extends AnAction {
                       }
                     }
 
-                    if(assessments == true) {
+                    if(assessments) {
                         String assessment = "assessment-" + finalInput;
                       //Create Assessment.md Template
                       newFile = newDir.createChildData(this, assessment + ".md");
@@ -120,7 +120,7 @@ public class NewModuleAction extends AnAction {
                       }
                     }
 
-                    if(outcomes == true) {
+                    if(outcomes) {
                         String outcome = "outcome-" + finalInput;
                       //Create Outcome.md Template
                       newFile = newDir.createChildData(this, outcome + ".md");
@@ -133,7 +133,7 @@ public class NewModuleAction extends AnAction {
                       }
                     }
 
-                    if(experiences == true) {
+                    if(experiences) {
                         String experience = "experience-" + finalInput;
                       //Create Experience.md Template
                       newFile = newDir.createChildData(this, experience + ".md");
