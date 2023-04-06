@@ -1,18 +1,18 @@
-package com.MoreaFramework;
+package com.moreaframework;
 
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.ui.InputValidator;
 import com.intellij.openapi.ui.Messages;
 
-public class NewOutcomesAction extends AnAction {
+public class NewExperiencesAction extends AnAction {
 
     @Override
     public void actionPerformed(AnActionEvent e) {
         MoreaUtils morea = new MoreaUtils();
-        String type = "outcome";
+        String type = "experience";
 
-        String input = Messages.showInputDialog("Enter Outcomes Page Name:", "New Outcomes Page", Messages.getQuestionIcon(), "outcome-example", new InputValidator() {
+        String input = Messages.showInputDialog("Enter Experiences Page Name:", "New Experiences Page", Messages.getQuestionIcon(), "experience-example", new InputValidator() {
             @Override
             public boolean checkInput(String inputString) {
                 return !inputString.isEmpty();

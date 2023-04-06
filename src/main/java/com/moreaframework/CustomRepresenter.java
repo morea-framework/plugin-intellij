@@ -1,4 +1,4 @@
-package com.MoreaFramework;
+package com.moreaframework;
 
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.introspector.Property;

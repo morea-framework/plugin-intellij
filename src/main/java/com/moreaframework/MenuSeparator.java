@@ -1,4 +1,4 @@
-package com.MoreaFramework;
+package com.moreaframework;
 
 import com.intellij.openapi.actionSystem.*;
 import org.jetbrains.annotations.NotNull;
