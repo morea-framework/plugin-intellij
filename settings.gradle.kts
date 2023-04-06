@@ -1,1 +1,1 @@
-rootProject.name = "NewPageAction"
+rootProject.name = "plugin-intellij"

@@ -1,4 +1,4 @@
-package com.newpageaction;
+package com.MoreaFramework;
 
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
@@ -8,7 +8,6 @@ import com.intellij.openapi.ui.InputValidator;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.vfs.VirtualFile;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 

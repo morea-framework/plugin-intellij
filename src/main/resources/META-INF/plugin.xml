@@ -3,7 +3,7 @@
     <id>com.github.bkimcode.newpageaction</id>
     <name>Morea</name>
     <version>0.0.2</version>
-    <vendor email="bekim3@hawaii.edu" url="https://github.com/Spring2023MoreaFrameworkPlugin/NewPageAction">bkimcode</vendor>
+    <vendor email="johnson@hawaii.edu" url="https://github.com/Spring2023MoreaFrameworkPlugin/NewPageAction">Morea-Framework</vendor>
     <description><![CDATA[
     Plugin to provide Morea developers with additional tools to aid in development.
      - right-click option on Morea directory to create a new module
@@ -12,19 +12,18 @@
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.java-capable</depends>
     <extensions defaultExtensionNs="com.intellij">
-        <applicationService serviceImplementation="com.newpageaction.settings.AppSettingsState"/>
-        <projectService serviceImplementation="com.github.bkimcode.newpageaction.services.MyProjectService"/>
+        <applicationService serviceImplementation="com.MoreaFramework.settings.AppSettingsState"/>
         <applicationConfigurable
           parentId="tools"
-          instance="com.newpageaction.settings.AppSettingsConfigurable"
-          id="com.newpageaction.settings.AppSettingsConfigurable"
+          instance="com.MoreaFramework.settings.AppSettingsConfigurable"
+          id="com.MoreaFramework.settings.AppSettingsConfigurable"
           displayName="MOREA settings"
         />
     </extensions>
  <actions>
             <action
                     id="NewModuleAction"
-                    class="com.newpageaction.NewModuleAction"
+                    class="com.MoreaFramework.NewModuleAction"
                     text="Create New Morea Module"
                     description="Create a new Morea Module with a specified name"
                     icon="AllIcons.Actions.GeneratedFolder">
@@ -33,7 +32,7 @@
    <!--
             <action
                     id="NewPageAction"
-                    class="com.newpageaction.NewPageAction"
+                    class="com.MoreaFramework.NewPageAction"
                     text="Create Single New Morea Page"
                     description="Create a new Morea Page with a specified name"
                     icon="AllIcons.Actions.AddFile">
@@ -42,7 +41,7 @@
    -->
             <action
                     id="NewOutcomesAction"
-                    class="com.newpageaction.NewOutcomesAction"
+                    class="com.MoreaFramework.NewOutcomesAction"
                     text="Create Single New Outcome Page"
                     description="Create a new Outcomes Page with a specified name"
                     icon="AllIcons.Actions.AddFile">
@@ -50,7 +49,7 @@
             </action>
             <action
                     id="NewReadingsAction"
-                    class="com.newpageaction.NewReadingsAction"
+                    class="com.MoreaFramework.NewReadingsAction"
                     text="Create Single New Reading Page"
                     description="Create a new Readings Page with a specified name"
                     icon="AllIcons.Actions.AddFile">
@@ -58,7 +57,7 @@
             </action>
             <action
                     id="NewExeriencesAction"
-                    class="com.newpageaction.NewExperiencesAction"
+                    class="com.MoreaFramework.NewExperiencesAction"
                     text="Create Single New Experience Page"
                     description="Create a new Experiences Page with a specified name"
                     icon="AllIcons.Actions.AddFile">
@@ -66,7 +65,7 @@
             </action>
             <action
                     id="NewAssessmentsAction"
-                    class="com.newpageaction.NewAssessmentsAction"
+                    class="com.MoreaFramework.NewAssessmentsAction"
                     text="Create Single New Assessment Page"
                     description="Create a new Assessments Page with a specified name"
                     icon="AllIcons.Actions.AddFile">
@@ -74,7 +73,7 @@
             </action>
             <action
                     id="UpdateModule"
-                    class="com.newpageaction.UpdateModule"
+                    class="com.MoreaFramework.UpdateModule"
                     text="Update Module.md file"
                     description="Updates the module.md to contain current morea pages"
                     icon="AllIcons.Actions.AddFile">

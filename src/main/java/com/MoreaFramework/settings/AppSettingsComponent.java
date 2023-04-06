@@ -1,4 +1,4 @@
-package com.newpageaction.settings;
+package com.MoreaFramework.settings;
 
 import com.intellij.ui.components.JBCheckBox;
 import com.intellij.util.ui.FormBuilder;

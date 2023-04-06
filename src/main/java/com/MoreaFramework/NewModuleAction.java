@@ -1,11 +1,11 @@
-package com.newpageaction;
+package com.MoreaFramework;
 
 import com.intellij.openapi.actionSystem.*;
 import com.intellij.openapi.application.WriteAction;
 import com.intellij.openapi.ui.InputValidator;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.newpageaction.settings.AppSettingsState;
+import com.MoreaFramework.settings.AppSettingsState;
 
 import java.io.IOException;
 import java.io.OutputStream;

@@ -1,4 +1,4 @@
-package com.newpageaction.settings;
+package com.MoreaFramework.settings;
 
 import com.intellij.openapi.options.Configurable;
 import org.jetbrains.annotations.Nls;

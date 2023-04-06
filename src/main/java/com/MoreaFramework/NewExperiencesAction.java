@@ -1,4 +1,4 @@
-package com.newpageaction;
+package com.MoreaFramework;
 
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
@@ -8,16 +8,15 @@ import com.intellij.openapi.ui.InputValidator;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.vfs.VirtualFile;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 
-public class NewOutcomesAction extends AnAction {
+public class NewExperiencesAction extends AnAction {
 
     @Override
     public void actionPerformed(AnActionEvent e) {
         MoreaUtils morea = new MoreaUtils();
-        String input = Messages.showInputDialog("Enter Outcomes Page Name:", "New Outcomes Page", Messages.getQuestionIcon(), "outcome-example", new InputValidator() {
+        String input = Messages.showInputDialog("Enter Experiences Page Name:", "New Experiences Page", Messages.getQuestionIcon(), "experience-example", new InputValidator() {
             @Override
             public boolean checkInput(String inputString) {
                 return !inputString.isEmpty();
@@ -32,7 +31,7 @@ public class NewOutcomesAction extends AnAction {
         // Check if name to create is not null
         if (input != null) {
             // Check input name matches MOREA naming convention
-            input = morea.toMoreaName(input, "outcomes");
+            input = morea.toMoreaName(input, "experiences");
             VirtualFile directory = morea.checkDupes(e, input);
 
             String finalInput = input;
@@ -44,14 +43,14 @@ public class NewOutcomesAction extends AnAction {
                                 "title: \"CHANGE ME\"\n" +
                                 "published: true\n" +
                                 "morea_id: " + finalInput + "\n" +
-                                "morea_type: outcome\n" +
+                                "morea_type: experience\n" +
                                 "morea_summary: \"CHANGE ME\"\n" +
                                 "morea_sort_order: \n" +
                                 "morea_start_date: \n" +
                                 "morea_labels: \n" +
                                 "---\n\n" +
                                 "## \"CHANGE ME\"\n\n" +
-                                "This is a sample content for the newly creating outcome.md file";
+                                "This is a sample content for the newly creating experience.md file";
                         outputStream.write(content.getBytes());
                     } catch (IOException ex) {
                         ex.printStackTrace();

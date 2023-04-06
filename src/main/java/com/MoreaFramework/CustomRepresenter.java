@@ -1,4 +1,4 @@
-package com.newpageaction;
+package com.MoreaFramework;
 
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.introspector.Property;
@@ -8,7 +8,6 @@ import org.yaml.snakeyaml.representer.Representer;
 import org.yaml.snakeyaml.introspector.PropertyUtils;
 
 import java.util.Comparator;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
