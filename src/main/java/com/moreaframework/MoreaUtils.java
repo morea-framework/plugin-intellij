@@ -1,4 +1,4 @@
-package com.MoreaFramework;
+package com.moreaframework;
 
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
