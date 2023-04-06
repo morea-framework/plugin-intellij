@@ -19,10 +19,10 @@ import org.jetbrains.annotations.Nullable;
 )
 public class AppSettingsState implements PersistentStateComponent<AppSettingsState> {
 
-    public boolean outcomeStatus = true;
-    public boolean readingStatus = true;
-    public boolean experienceStatus = true;
-    public boolean assessmentStatus = true;
+    public boolean outcomeStatus = false;
+    public boolean readingStatus = false;
+    public boolean experienceStatus = false;
+    public boolean assessmentStatus = false;
 
     public static AppSettingsState getInstance() {
         return ApplicationManager.getApplication().getService(AppSettingsState.class);

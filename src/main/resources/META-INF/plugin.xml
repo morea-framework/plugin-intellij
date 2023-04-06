@@ -3,7 +3,7 @@
     <id>com.github.bkimcode.newpageaction</id>
     <name>Morea</name>
     <version>0.0.2</version>
-    <vendor email="johnson@hawaii.edu" url="https://github.com/Spring2023MoreaFrameworkPlugin/NewPageAction">Morea-Framework</vendor>
+    <vendor email="johnson@hawaii.edu" url="https://github.com/morea-framework/plugin-intellij">Morea-Framework</vendor>
     <description><![CDATA[
     Plugin to provide Morea developers with additional tools to aid in development.
      - right-click option on Morea directory to create a new module
@@ -39,38 +39,42 @@
                 <add-to-group group-id="NewGroup" anchor="first" />
             </action>
    -->
-            <action
-                    id="NewOutcomesAction"
-                    class="com.MoreaFramework.NewOutcomesAction"
-                    text="Create Single New Outcome Page"
-                    description="Create a new Outcomes Page with a specified name"
-                    icon="AllIcons.Actions.AddFile">
-                <add-to-group group-id="NewGroup" anchor="first" />
-            </action>
-            <action
-                    id="NewReadingsAction"
-                    class="com.MoreaFramework.NewReadingsAction"
-                    text="Create Single New Reading Page"
-                    description="Create a new Readings Page with a specified name"
-                    icon="AllIcons.Actions.AddFile">
-                <add-to-group group-id="NewGroup" anchor="first" />
-            </action>
-            <action
-                    id="NewExeriencesAction"
-                    class="com.MoreaFramework.NewExperiencesAction"
-                    text="Create Single New Experience Page"
-                    description="Create a new Experiences Page with a specified name"
-                    icon="AllIcons.Actions.AddFile">
-                <add-to-group group-id="NewGroup" anchor="first" />
-            </action>
-            <action
-                    id="NewAssessmentsAction"
-                    class="com.MoreaFramework.NewAssessmentsAction"
-                    text="Create Single New Assessment Page"
-                    description="Create a new Assessments Page with a specified name"
-                    icon="AllIcons.Actions.AddFile">
-                <add-to-group group-id="NewGroup" anchor="first" />
-            </action>
+     <action
+             id="MoreaActionGroup"
+             class="com.MoreaFramework.MenuSeparator"
+             text="Morea">
+         <add-to-group group-id="NewGroup" anchor="first" />
+     </action>
+
+     <action
+             id="NewOutcomesAction"
+             class="com.MoreaFramework.NewOutcomesAction"
+             text="Create Single New Outcome Page"
+             description="Create a new Outcomes Page with a specified name"
+             icon="AllIcons.Actions.AddFile">
+     </action>
+     <action
+             id="NewReadingsAction"
+             class="com.MoreaFramework.NewReadingsAction"
+             text="Create Single New Reading Page"
+             description="Create a new Readings Page with a specified name"
+             icon="AllIcons.Actions.AddFile">
+     </action>
+     <action
+             id="NewExperiencesAction"
+             class="com.MoreaFramework.NewExperiencesAction"
+             text="Create Single New Experience Page"
+             description="Create a new Experiences Page with a specified name"
+             icon="AllIcons.Actions.AddFile">
+     </action>
+     <action
+             id="NewAssessmentsAction"
+             class="com.MoreaFramework.NewAssessmentsAction"
+             text="Create Single New Assessment Page"
+             description="Create a new Assessments Page with a specified name"
+             icon="AllIcons.Actions.AddFile">
+     </action>
+
             <action
                     id="UpdateModule"
                     class="com.MoreaFramework.UpdateModule"
