@@ -24,7 +24,7 @@
             <action
                     id="NewModuleAction"
                     class="com.moreaframework.NewModuleAction"
-                    text="Create New Morea Module"
+                    text="Morea Module"
                     description="Create a new Morea Module with a specified name"
                     icon="AllIcons.Actions.GeneratedFolder">
                 <add-to-group group-id="NewGroup" anchor="first" />
@@ -49,28 +49,28 @@
      <action
              id="NewOutcomesAction"
              class="com.moreaframework.NewOutcomesAction"
-             text="Create Single New Outcome Page"
+             text="Morea Outcome"
              description="Create a new Outcomes Page with a specified name"
              icon="AllIcons.Actions.AddFile">
      </action>
      <action
              id="NewReadingsAction"
              class="com.moreaframework.NewReadingsAction"
-             text="Create Single New Reading Page"
+             text="Morea Reading"
              description="Create a new Readings Page with a specified name"
              icon="AllIcons.Actions.AddFile">
      </action>
      <action
              id="NewExperiencesAction"
              class="com.moreaframework.NewExperiencesAction"
-             text="Create Single New Experience Page"
+             text="Morea Experience "
              description="Create a new Experiences Page with a specified name"
              icon="AllIcons.Actions.AddFile">
      </action>
      <action
              id="NewAssessmentsAction"
              class="com.moreaframework.NewAssessmentsAction"
-             text="Create Single New Assessment Page"
+             text="Morea Assessment"
              description="Create a new Assessments Page with a specified name"
              icon="AllIcons.Actions.AddFile">
      </action>
