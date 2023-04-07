@@ -7,10 +7,10 @@ public class MenuSeparator extends DefaultActionGroup {
     @Override
     public void update(@NotNull AnActionEvent e) {
         removeAll();
+        addSeparator();
         addAction(ActionManager.getInstance().getAction("NewOutcomesAction"));
         addAction(ActionManager.getInstance().getAction("NewReadingsAction"));
         addAction(ActionManager.getInstance().getAction("NewExperiencesAction"));
         addAction(ActionManager.getInstance().getAction("NewAssessmentsAction"));
-        addSeparator();
     }
 }
