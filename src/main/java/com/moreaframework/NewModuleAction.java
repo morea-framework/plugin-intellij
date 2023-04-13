@@ -62,94 +62,102 @@ public class NewModuleAction extends AnAction {
             String finalAssessmentString = assessmentString;
             String finalInput = input;
 
-            WriteAction.run(() -> {
-                try {
-                    // create a directory with the specified name
-                    VirtualFile newDir = folder.createChildDirectory(this, finalInput);
+            // Check if the directory exists
+            VirtualFile existingDir = folder.findChild(input);
+            if (existingDir != null && existingDir.isDirectory()) {
+                // Show error message
+                Messages.showErrorDialog("The directory already exists.", "Error");
+            }
+            else {
+                WriteAction.run(() -> {
+                    try {
+                        // create a directory with the specified name
+                        VirtualFile newDir = folder.createChildDirectory(this, finalInput);
 
-                    // create a .md file called module-input.md inside the new directory
-                    VirtualFile newFile = newDir.createChildData(this, "module-" + finalInput + ".md");
+                        // create a .md file called module-input.md inside the new directory
+                        VirtualFile newFile = newDir.createChildData(this, "module-" + finalInput + ".md");
 
-                    // Create the file so it matches
-                    try (OutputStream outputStream = newFile.getOutputStream(this)) {
-                        String content = "---" + "\n" +
-                                "title: \"" + "CHANGE ME" + "\"" + "\n" +
-                                "published: true" + "\n" +
-                                "morea_coming_soon: false" + "\n" +
-                                "morea_id: module-" + finalInput + "\n" +
-                                "morea_outcomes:"+ finalOutcomeString +"" + "\n" +
-                                "morea_readings:"+ finalReadingString +"" + "\n" +
-                                "morea_experiences:"+ finalExperienceString +"" +"\n" +
-                                "morea_assessments:"+ finalAssessmentString +"" + "\n" +
-                                "morea_type: module" + "\n" +
-                                "morea_icon_url:" + "\n" +
-                                "morea_start_date:" + "\n" +
-                                "morea_end_date:" + "\n" +
-                                "morea_labels:" + "\n" +
-                                "morea_sort_order:" +
-                                "\n" +
-                                "---";
-                        outputStream.write(content.getBytes());
+                        // Create the file so it matches
+                        try (OutputStream outputStream = newFile.getOutputStream(this)) {
+                            String content = "---" + "\n" +
+                                    "title: \"" + "CHANGE ME" + "\"" + "\n" +
+                                    "published: true" + "\n" +
+                                    "morea_coming_soon: false" + "\n" +
+                                    "morea_id: module-" + finalInput + "\n" +
+                                    "morea_outcomes:" + finalOutcomeString + "" + "\n" +
+                                    "morea_readings:" + finalReadingString + "" + "\n" +
+                                    "morea_experiences:" + finalExperienceString + "" + "\n" +
+                                    "morea_assessments:" + finalAssessmentString + "" + "\n" +
+                                    "morea_type: module" + "\n" +
+                                    "morea_icon_url:" + "\n" +
+                                    "morea_start_date:" + "\n" +
+                                    "morea_end_date:" + "\n" +
+                                    "morea_labels:" + "\n" +
+                                    "morea_sort_order:" +
+                                    "\n" +
+                                    "---";
+                            outputStream.write(content.getBytes());
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        }
+
+                        if (readings) {
+                            String reading = "reading-" + finalInput;
+                            // Create Reading.md Template
+                            newFile = newDir.createChildData(this, reading + ".md");
+                            // Create the file so it matches
+                            try (OutputStream outputStream = newFile.getOutputStream(this)) {
+                                String content = morea.pageFrontMatter(reading, "reading");
+                                outputStream.write(content.getBytes());
+                            } catch (IOException ex) {
+                                ex.printStackTrace();
+                            }
+                        }
+
+                        if (assessments) {
+                            String assessment = "assessment-" + finalInput;
+                            //Create Assessment.md Template
+                            newFile = newDir.createChildData(this, assessment + ".md");
+                            // Create the file so it matches
+                            try (OutputStream outputStream = newFile.getOutputStream(this)) {
+                                String content = morea.pageFrontMatter(assessment, "assessment");
+                                outputStream.write(content.getBytes());
+                            } catch (IOException ex) {
+                                ex.printStackTrace();
+                            }
+                        }
+
+                        if (outcomes) {
+                            String outcome = "outcome-" + finalInput;
+                            //Create Outcome.md Template
+                            newFile = newDir.createChildData(this, outcome + ".md");
+                            // Create the file so it matches
+                            try (OutputStream outputStream = newFile.getOutputStream(this)) {
+                                String content = morea.pageFrontMatter(outcome, "outcome");
+                                outputStream.write(content.getBytes());
+                            } catch (IOException ex) {
+                                ex.printStackTrace();
+                            }
+                        }
+
+                        if (experiences) {
+                            String experience = "experience-" + finalInput;
+                            //Create Experience.md Template
+                            newFile = newDir.createChildData(this, experience + ".md");
+                            // Create the file so it matches
+                            try (OutputStream outputStream = newFile.getOutputStream(this)) {
+                                String content = morea.pageFrontMatter(experience, "experience");
+                                outputStream.write(content.getBytes());
+                            } catch (IOException ex) {
+                                ex.printStackTrace();
+                            }
+                        }
+
                     } catch (IOException ex) {
-                        ex.printStackTrace();
+                        throw new RuntimeException(ex);
                     }
-
-                    if(readings) {
-                        String reading = "reading-" + finalInput;
-                      // Create Reading.md Template
-                      newFile = newDir.createChildData(this, reading + ".md");
-                      // Create the file so it matches
-                      try (OutputStream outputStream = newFile.getOutputStream(this)) {
-                        String content = morea.pageFrontMatter(reading, "reading");
-                        outputStream.write(content.getBytes());
-                      } catch (IOException ex) {
-                        ex.printStackTrace();
-                      }
-                    }
-
-                    if(assessments) {
-                        String assessment = "assessment-" + finalInput;
-                      //Create Assessment.md Template
-                      newFile = newDir.createChildData(this, assessment + ".md");
-                      // Create the file so it matches
-                      try (OutputStream outputStream = newFile.getOutputStream(this)) {
-                          String content = morea.pageFrontMatter(assessment, "assessment");
-                        outputStream.write(content.getBytes());
-                      } catch (IOException ex) {
-                        ex.printStackTrace();
-                      }
-                    }
-
-                    if(outcomes) {
-                        String outcome = "outcome-" + finalInput;
-                      //Create Outcome.md Template
-                      newFile = newDir.createChildData(this, outcome + ".md");
-                      // Create the file so it matches
-                      try (OutputStream outputStream = newFile.getOutputStream(this)) {
-                          String content = morea.pageFrontMatter(outcome, "outcome");
-                        outputStream.write(content.getBytes());
-                      } catch (IOException ex) {
-                        ex.printStackTrace();
-                      }
-                    }
-
-                    if(experiences) {
-                        String experience = "experience-" + finalInput;
-                      //Create Experience.md Template
-                      newFile = newDir.createChildData(this, experience + ".md");
-                      // Create the file so it matches
-                      try (OutputStream outputStream = newFile.getOutputStream(this)) {
-                          String content = morea.pageFrontMatter(experience, "experience");
-                        outputStream.write(content.getBytes());
-                      } catch (IOException ex) {
-                        ex.printStackTrace();
-                      }
-                    }
-
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
-            });
+                });
+            }
         }
         else{
           System.out.println("Input is null");
