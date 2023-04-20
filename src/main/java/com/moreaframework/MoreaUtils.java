@@ -5,31 +5,91 @@ import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.application.WriteAction;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.vfs.VirtualFile;
+import org.yaml.snakeyaml.DumperOptions;
+import org.yaml.snakeyaml.Yaml;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.OutputStream;
+
+import java.io.*;
 import java.util.Locale;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class MoreaUtils {
-    public static boolean existsInDirOrSubdirs(File directory, String fileName) {
+    public static boolean existsInDirOrSubdirs(File directory, String fileName, String moduleId) {
+        // Check if the given path is a directory
         if (directory.isDirectory()) {
             File[] files = directory.listFiles();
             if (files != null) {
+                // Iterate through all files and directories within the directory
                 for (File file : files) {
+                    // If the current path is a directory, perform a recursive call
                     if (file.isDirectory()) {
-                        // recursively check in subdirectories
-                        if (existsInDirOrSubdirs(file, fileName)) {
+                        if (existsInDirOrSubdirs(file, fileName, moduleId)) {
                             return true;
                         }
-                    } else if (file.getName().equals(fileName)) {
-                        return true;
+                    } else {
+                        // If the current file has the same name as the target file, return true
+                        if (file.getName().equals(fileName)) {
+                            return true;
+                        } else {
+                            try {
+                                // Retrieve the module ID from the current file's YAML
+                                String fileModuleId = getModuleIdFromYaml(file);
+                                // If the module ID matches the target module ID, return true
+                                if (fileModuleId != null && moduleId.equals(fileModuleId)) {
+                                    return true;
+                                }
+                            } catch (IOException e) {
+                                // Print any IOException that occurs during YAML parsing
+                                e.printStackTrace();
+                            }
+                        }
                     }
                 }
             }
         }
+        // Return false if neither the file name nor the module ID match any file in the directory or subdirectories
         return false;
     }
+
+
+    public static String getModuleIdFromYaml(File file) throws IOException {
+        // Use try-with-resources to ensure the BufferedReader is closed automatically
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            String line;
+            StringBuilder yamlContent = new StringBuilder();
+            boolean insideYamlFrontmatter = false;
+
+            // Read through the file line by line
+            while ((line = reader.readLine()) != null) {
+                // Check if the line contains the YAML front matter delimiter
+                if (line.trim().equals("---")) {
+                    // Toggle the insideYamlFrontmatter flag when encountering a delimiter
+                    insideYamlFrontmatter = !insideYamlFrontmatter;
+                    // Break out of the loop when encountering the closing delimiter
+                    if (!insideYamlFrontmatter) {
+                        break;
+                    }
+                } else if (insideYamlFrontmatter) {
+                    // Append the line to yamlContent if it is within the YAML front matter
+                    yamlContent.append(line).append("\n");
+                }
+            }
+
+            // Create a Yaml object and load the content as a map
+            Yaml yaml = new Yaml();
+            Map<String, Object> yamlMap = yaml.load(yamlContent.toString());
+
+            // Return null if the YAML map is empty or does not contain the "module_id" key
+            if (yamlMap == null || !yamlMap.containsKey("module_id")) {
+                return null;
+            }
+
+            // Return the value of the "module_id" key
+            return yamlMap.get("module_id").toString();
+        }
+    }
+
 
     public String toMoreaName(String input, String type) {
         input = input.toLowerCase(Locale.ROOT);
@@ -39,14 +99,14 @@ public class MoreaUtils {
         return input;
     }
 
-    public VirtualFile checkDupes(AnActionEvent e, String input) {
+    public VirtualFile checkDupes(AnActionEvent e, String moduleId) {
         VirtualFile selectedFile = e.getData(PlatformDataKeys.VIRTUAL_FILE);
 
-        String fileName = input + ".md";
-
+        String fileName = moduleId + ".md";
         VirtualFile directory = selectedFile.isDirectory() ? selectedFile : selectedFile.getParent();
-        if (existsInDirOrSubdirs(new File(directory.getParent().getPath()), fileName)) {
-            Messages.showMessageDialog("File already exists.", "Error", Messages.getErrorIcon());
+        if (existsInDirOrSubdirs(new File(directory.getParent().getPath()), fileName, moduleId)) {
+            Messages.showMessageDialog("File with the same name or module id already exists.", "Error", Messages.getErrorIcon());
+            return null;
         }
         return directory;
     }
@@ -73,20 +133,23 @@ public class MoreaUtils {
             input = toMoreaName(input, type);
             VirtualFile directory = checkDupes(e, input);
 
-            String finalInput = input;
-            WriteAction.run(() -> {
-                try {
-                    VirtualFile readingFile = directory.createChildData(this, finalInput + ".md");
-                    try (OutputStream outputStream = readingFile.getOutputStream(this)) {
-                        String content = pageFrontMatter(finalInput, type);
-                        outputStream.write(content.getBytes());
+            // Only create the page if the directory is not null (no duplicate found)
+            if (directory != null) {
+                String finalInput = input;
+                WriteAction.run(() -> {
+                    try {
+                        VirtualFile readingFile = directory.createChildData(this, finalInput + ".md");
+                        try (OutputStream outputStream = readingFile.getOutputStream(this)) {
+                            String content = pageFrontMatter(finalInput, type);
+                            outputStream.write(content.getBytes());
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        }
                     } catch (IOException ex) {
-                        ex.printStackTrace();
+                        throw new RuntimeException(ex);
                     }
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
-            });
+                });
+            }
         }
     }
 
