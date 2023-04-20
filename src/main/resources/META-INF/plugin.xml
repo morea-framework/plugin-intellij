@@ -12,14 +12,20 @@
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.java-capable</depends>
     <extensions defaultExtensionNs="com.intellij">
-        <applicationService serviceImplementation="com.moreaframework.settings.AppSettingsState"/>
-        <applicationConfigurable
+      <applicationService serviceImplementation="com.moreaframework.settings.AppSettingsState"/>
+      <applicationConfigurable
           parentId="tools"
           instance="com.moreaframework.settings.AppSettingsConfigurable"
           id="com.moreaframework.settings.AppSettingsConfigurable"
           displayName="MOREA settings"
-        />
+      />
     </extensions>
+
+  <projectListeners>
+    <listener
+        class="com.moreaframework.FileDeleteListener"
+        topic="com.intellij.openapi.actionSystem.ex.AnActionListener"/>
+  </projectListeners>
 
   <actions>
     <action
