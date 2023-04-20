@@ -1,8 +1,8 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
-    <id>com.github.bkimcode.newpageaction</id>
+    <id>com.github.moreaframework.pluginintellij</id>
     <name>Morea</name>
-    <version>0.0.2</version>
+    <version>1.0.0</version>
     <vendor email="johnson@hawaii.edu" url="https://github.com/morea-framework/plugin-intellij">Morea-Framework</vendor>
     <description><![CDATA[
     Plugin to provide Morea developers with additional tools to aid in development.
@@ -12,76 +12,81 @@
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.java-capable</depends>
     <extensions defaultExtensionNs="com.intellij">
-        <applicationService serviceImplementation="com.MoreaFramework.settings.AppSettingsState"/>
-        <applicationConfigurable
+      <applicationService serviceImplementation="com.moreaframework.settings.AppSettingsState"/>
+      <applicationConfigurable
           parentId="tools"
-          instance="com.MoreaFramework.settings.AppSettingsConfigurable"
-          id="com.MoreaFramework.settings.AppSettingsConfigurable"
+          instance="com.moreaframework.settings.AppSettingsConfigurable"
+          id="com.moreaframework.settings.AppSettingsConfigurable"
           displayName="MOREA settings"
-        />
+      />
     </extensions>
- <actions>
-            <action
-                    id="NewModuleAction"
-                    class="com.MoreaFramework.NewModuleAction"
-                    text="Create New Morea Module"
-                    description="Create a new Morea Module with a specified name"
-                    icon="AllIcons.Actions.GeneratedFolder">
-                <add-to-group group-id="NewGroup" anchor="first" />
-            </action>
-   <!--
-            <action
-                    id="NewPageAction"
-                    class="com.MoreaFramework.NewPageAction"
-                    text="Create Single New Morea Page"
-                    description="Create a new Morea Page with a specified name"
-                    icon="AllIcons.Actions.AddFile">
-                <add-to-group group-id="NewGroup" anchor="first" />
-            </action>
-   -->
-     <action
-             id="MoreaActionGroup"
-             class="com.MoreaFramework.MenuSeparator"
-             text="Morea">
-         <add-to-group group-id="NewGroup" anchor="first" />
-     </action>
 
-     <action
-             id="NewOutcomesAction"
-             class="com.MoreaFramework.NewOutcomesAction"
-             text="Create Single New Outcome Page"
-             description="Create a new Outcomes Page with a specified name"
-             icon="AllIcons.Actions.AddFile">
-     </action>
-     <action
-             id="NewReadingsAction"
-             class="com.MoreaFramework.NewReadingsAction"
-             text="Create Single New Reading Page"
-             description="Create a new Readings Page with a specified name"
-             icon="AllIcons.Actions.AddFile">
-     </action>
-     <action
-             id="NewExperiencesAction"
-             class="com.MoreaFramework.NewExperiencesAction"
-             text="Create Single New Experience Page"
-             description="Create a new Experiences Page with a specified name"
-             icon="AllIcons.Actions.AddFile">
-     </action>
-     <action
-             id="NewAssessmentsAction"
-             class="com.MoreaFramework.NewAssessmentsAction"
-             text="Create Single New Assessment Page"
-             description="Create a new Assessments Page with a specified name"
-             icon="AllIcons.Actions.AddFile">
-     </action>
+  <projectListeners>
+    <listener
+        class="com.moreaframework.FileDeleteListener"
+        topic="com.intellij.openapi.actionSystem.ex.AnActionListener"/>
+  </projectListeners>
 
-            <action
-                    id="UpdateModule"
-                    class="com.MoreaFramework.UpdateModule"
-                    text="Update Module.md file"
-                    description="Updates the module.md to contain current morea pages"
-                    icon="AllIcons.Actions.AddFile">
-                <add-to-group group-id="ProjectViewPopupMenu" anchor="last" />
-            </action>
-    </actions>
+  <actions>
+    <action
+        id="ModuleActionGroup"
+        class="com.moreaframework.ModuleSeparator"
+        text="Morea">
+     <add-to-group group-id="NewGroup" anchor="last"/>
+    </action>
+    <action
+        id="NewModuleAction"
+        class="com.moreaframework.NewModuleAction"
+        text="Morea Module"
+        description="Create a new Morea Module with a specified name"
+        icon="AllIcons.Actions.GeneratedFolder">
+
+    </action>
+    <action
+        id="MoreaActionGroup"
+        class="com.moreaframework.MenuSeparator"
+        text="Morea">
+      <add-to-group group-id="NewGroup" anchor="last" />
+    </action>
+    <action
+        id="NewOutcomesAction"
+        class="com.moreaframework.NewOutcomesAction"
+        text="Morea Outcome"
+        description="Create a new Outcomes Page with a specified name"
+        icon="AllIcons.Actions.AddFile">
+
+    </action>
+    <action
+        id="NewReadingsAction"
+        class="com.moreaframework.NewReadingsAction"
+        text="Morea Reading"
+        description="Create a new Readings Page with a specified name"
+        icon="AllIcons.Actions.AddFile">
+
+    </action>
+    <action
+        id="NewExperiencesAction"
+        class="com.moreaframework.NewExperiencesAction"
+        text="Morea Experience"
+        description="Create a new Experiences Page with a specified name"
+        icon="AllIcons.Actions.AddFile">
+
+    </action>
+    <action
+        id="NewAssessmentsAction"
+        class="com.moreaframework.NewAssessmentsAction"
+        text="Morea Assessment"
+        description="Create a new Assessments Page with a specified name"
+        icon="AllIcons.Actions.AddFile">
+
+    </action>
+    <action
+        id="UpdateModule"
+        class="com.moreaframework.UpdateModule"
+        text="Update Module.md file"
+        description="Updates the module.md to contain current morea pages"
+        icon="AllIcons.Actions.AddFile">
+      <add-to-group group-id="ProjectViewPopupMenu" anchor="last" />
+    </action>
+  </actions>
 </idea-plugin>

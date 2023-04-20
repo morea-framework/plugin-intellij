@@ -1,4 +1,4 @@
-package com.MoreaFramework.settings;
+package com.moreaframework.settings;
 
 import com.intellij.openapi.options.Configurable;
 import org.jetbrains.annotations.Nls;
