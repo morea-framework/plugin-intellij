@@ -57,7 +57,6 @@ public class FileDeleteListener implements AnActionListener {
                     int typePos = deletedID.indexOf("-");
                     String type = deletedID.substring(0,typePos);
                     type = "morea_" + type + "s";
-                    System.out.println(type);
 
                     Map<String, Object> moduleFrontMatterData = moduleFileYaml.load(moduleFrontMatter);
                     List<Map<String, Object>> moreaType = (List<Map<String, Object>>) moduleFrontMatterData.get(type);

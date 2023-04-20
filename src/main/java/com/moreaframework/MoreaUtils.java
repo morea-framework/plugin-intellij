@@ -2,7 +2,10 @@ package com.moreaframework;
 
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.application.WriteAction;
+import com.intellij.openapi.editor.Document;
+import com.intellij.openapi.fileEditor.FileDocumentManager;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.vfs.VirtualFile;
 import org.yaml.snakeyaml.DumperOptions;
@@ -10,6 +13,7 @@ import org.yaml.snakeyaml.Yaml;
 
 
 import java.io.*;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -161,6 +165,52 @@ public class MoreaUtils {
         } else {
             e.getPresentation().setEnabledAndVisible(false);
         }
+    }
+
+    public void updateModule (String input, String type, AnActionEvent event) {
+        String morea_id = toMoreaName(input, type);
+        VirtualFile parentDir = event.getData(PlatformDataKeys.VIRTUAL_FILE);
+        parentDir.refresh(false, true);
+        String moduleName = "module-" + parentDir.getName() + ".md";
+
+        for (VirtualFile file : parentDir.getChildren()) {
+            if (file.getName().equalsIgnoreCase(moduleName)) {
+                Yaml moduleFileYaml = new Yaml();
+                Yaml repYaml = new Yaml(new CustomRepresenter());
+                DumperOptions options = new DumperOptions();
+
+                Document moduleDocument = FileDocumentManager.getInstance().getDocument(file);
+
+                String moduleContent = moduleDocument.getText();
+
+                int moduleFrontMatterEnd = moduleContent.indexOf("---", 3);
+                int moduleFrontMatterStart = moduleContent.indexOf("---") + 3;
+
+                String moduleFrontMatter = moduleContent.substring(moduleFrontMatterStart, moduleFrontMatterEnd);
+                String moduleRemainingContent = moduleContent.substring(moduleFrontMatterEnd + 3);
+
+                Map<String, Object> moduleFrontMatterData = moduleFileYaml.load(moduleFrontMatter);
+
+                String category = "morea_" + type + "s";
+
+                List<String> moreaType = (List<String>) moduleFrontMatterData.get(category);
+
+                moreaType.add(morea_id);
+
+                options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
+                options.setPrettyFlow(true);
+
+                String updatedYamlFrontMatter = repYaml.dump(moduleFrontMatterData).trim();
+                String updatedContent = "---\n" + updatedYamlFrontMatter + "\n---" + moduleRemainingContent;
+
+                ApplicationManager.getApplication().runWriteAction(() -> {
+                    moduleDocument.setText(updatedContent);
+                });
+
+                break;
+            }
+        }
+
     }
 
 }
