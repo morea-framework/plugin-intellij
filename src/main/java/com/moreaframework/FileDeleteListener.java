@@ -10,6 +10,7 @@ import org.jetbrains.annotations.NotNull;
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
 
+import java.util.List;
 import java.util.Map;
 
 
@@ -52,9 +53,16 @@ public class FileDeleteListener implements AnActionListener {
                     Map<String, Object> deletedFrontMatterData = deletedFileYaml.load(deletedFrontMatter);
                     Object deletedId = deletedFrontMatterData.get("morea_id");
 
-                    Map<String, Object> moduleFrontMatterData = moduleFileYaml.load(moduleFrontMatter);
+                    String deletedID = deletedId.toString();
+                    int typePos = deletedID.indexOf("-");
+                    String type = deletedID.substring(0,typePos);
+                    type = "morea_" + type + "s";
+                    System.out.println(type);
 
-                    moduleFrontMatterData.remove("morea_id", deletedId);
+                    Map<String, Object> moduleFrontMatterData = moduleFileYaml.load(moduleFrontMatter);
+                    List<Map<String, Object>> moreaType = (List<Map<String, Object>>) moduleFrontMatterData.get(type);
+
+                    moreaType.remove(deletedId);
 
                     options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
                     options.setPrettyFlow(true);
