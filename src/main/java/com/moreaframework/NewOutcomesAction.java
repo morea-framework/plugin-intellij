@@ -26,6 +26,8 @@ public class NewOutcomesAction extends AnAction {
 
         // Create the page
         morea.createPage(input, type, e);
+        // Update module
+        morea.updateModule(input, type, e);
     }
 
     @Override
