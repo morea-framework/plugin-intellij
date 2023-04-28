@@ -13,6 +13,7 @@ import org.yaml.snakeyaml.Yaml;
 
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -193,9 +194,10 @@ public class MoreaUtils {
 
                 String category = "morea_" + type + "s";
 
-                List<String> moreaType = (List<String>) moduleFrontMatterData.get(category);
+                List<String> list = new ArrayList<>();
+                list.add(morea_id);
 
-                moreaType.add(morea_id);
+                moduleFrontMatterData.put(category, list);
 
                 options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
                 options.setPrettyFlow(true);
