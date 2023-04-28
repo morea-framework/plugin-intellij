@@ -20,6 +20,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class MoreaUtils {
+
     public static boolean existsInDirOrSubdirs(File directory, String fileName, String moduleId) {
         // Check if the given path is a directory
         if (directory.isDirectory()) {
@@ -132,7 +133,7 @@ public class MoreaUtils {
         return content;
     }
 
-    public void createPage(String input, String type, AnActionEvent e) {
+    public boolean createPage(String input, String type, AnActionEvent e) {
         if (input != null) {
             // Check input name matches MOREA naming convention
             input = toMoreaName(input, type);
@@ -154,8 +155,10 @@ public class MoreaUtils {
                         throw new RuntimeException(ex);
                     }
                 });
+                return true;
             }
         }
+        return false;
     }
 
     public void moreaVisibility(AnActionEvent e) {
